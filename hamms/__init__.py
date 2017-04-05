@@ -85,31 +85,33 @@ def listen(_reactor, base_port=BASE_PORT, retry_cache=None):
                                         toolong_content_app)
     toolong_content_site = HammsSite(toolong_content_resource)
 
-    _reactor.listenTCP(base_port + ListenForeverServer.PORT, ListenForeverFactory())
+    iface = 'localhost'
+
+    _reactor.listenTCP(base_port + ListenForeverServer.PORT, ListenForeverFactory(), interface=iface)
     _reactor.listenTCP(base_port + EmptyStringTerminateImmediatelyServer.PORT,
-                      EmptyStringTerminateImmediatelyFactory())
+                      EmptyStringTerminateImmediatelyFactory(), interface=iface)
     _reactor.listenTCP(base_port + EmptyStringTerminateOnReceiveServer.PORT,
-                      EmptyStringTerminateOnReceiveFactory())
+                      EmptyStringTerminateOnReceiveFactory(), interface=iface)
     _reactor.listenTCP(base_port + MalformedStringTerminateImmediatelyServer.PORT,
-                      MalformedStringTerminateImmediatelyFactory())
+                      MalformedStringTerminateImmediatelyFactory(), interface=iface)
     _reactor.listenTCP(base_port + MalformedStringTerminateOnReceiveServer.PORT,
-                      MalformedStringTerminateOnReceiveFactory())
+                      MalformedStringTerminateOnReceiveFactory(), interface=iface)
     _reactor.listenTCP(base_port + FiveSecondByteResponseServer.PORT,
-                      FiveSecondByteResponseFactory())
+                      FiveSecondByteResponseFactory(), interface=iface)
     _reactor.listenTCP(base_port + ThirtySecondByteResponseServer.PORT,
-                      ThirtySecondByteResponseFactory())
-    _reactor.listenTCP(base_port + sleep_app.PORT, sleep_site)
-    _reactor.listenTCP(base_port + status_app.PORT, status_site)
+                      ThirtySecondByteResponseFactory(), interface=iface)
+    _reactor.listenTCP(base_port + sleep_app.PORT, sleep_site, interface=iface)
+    _reactor.listenTCP(base_port + status_app.PORT, status_site, interface=iface)
     _reactor.listenTCP(base_port + SendDataPastContentLengthServer.PORT,
-                      SendDataPastContentLengthFactory())
-    _reactor.listenTCP(base_port + large_header_app.PORT, large_header_site)
-    _reactor.listenTCP(base_port + retries_app.PORT, retries_site)
+                      SendDataPastContentLengthFactory(), interface=iface)
+    _reactor.listenTCP(base_port + large_header_app.PORT, large_header_site, interface=iface)
+    _reactor.listenTCP(base_port + retries_app.PORT, retries_site, interface=iface)
     _reactor.listenTCP(base_port + DropRandomRequestsServer.PORT,
-                       DropRandomRequestsFactory())
-    _reactor.listenTCP(base_port + unparseable_app.PORT, unparseable_site)
+                       DropRandomRequestsFactory(), interface=iface)
+    _reactor.listenTCP(base_port + unparseable_app.PORT, unparseable_site, interface=iface)
     _reactor.listenTCP(base_port + IncompleteResponseServer.PORT,
-                       IncompleteResponseFactory())
-    _reactor.listenTCP(base_port + toolong_content_app.PORT, toolong_content_site)
+                       IncompleteResponseFactory(), interface=iface)
+    _reactor.listenTCP(base_port + toolong_content_app.PORT, toolong_content_site, interface=iface)
 
 
 def get_remote_host(transport):
